@@ -27,10 +27,12 @@ class AuthService
 
     public function login(array $data): ?string
     {
-        $user = $this->userRepository->getUserByEmail($data['email']);
+        $user = $this->userRepository->getUserByName($data['name']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            return null;
+            return response()->json([
+                'message' => 'Invalid Credentials'
+            ], 401);
         }
 
         return $user->createToken('authToken')->plainTextToken;

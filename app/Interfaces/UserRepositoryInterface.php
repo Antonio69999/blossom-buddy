@@ -8,5 +8,5 @@ interface UserRepositoryInterface
 {
     // Methodes d'accès aux données dans le repository
     public function createUser(array $data): User;
-    public function getUserByEmail(string $email): ?User;
+    public function getUserByName(string $name): ?User;
 }
