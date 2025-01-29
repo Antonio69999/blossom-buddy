@@ -11,5 +11,5 @@ class UserPlant extends Model
 
     protected $table = 'user_plant';
 
-    protected $fillable = ['user_id', 'plant_name', 'city'];
+    protected $fillable = ['user_id', 'plant_id', 'city'];
 }
