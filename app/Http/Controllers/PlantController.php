@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePlantRequest;
 use App\Interfaces\PlantInterface;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
 class PlantController extends Controller
@@ -77,14 +77,12 @@ class PlantController extends Controller
             )
         ]
     )]
-    public function store(Request $request)
-    {
-        $request->validate([
-            'common_name' => 'required|string|max:255',
-            'watering_general_benchmark' => 'required|json',
-        ]);
 
-        $plant = $this->plantService->createPlant($request->all());
+    public function store(StorePlantRequest $request)
+    {
+        $data = $request->validated();
+
+        $plant = $this->plantService->createPlant($data);
 
         return response()->json($plant, 201);
     }

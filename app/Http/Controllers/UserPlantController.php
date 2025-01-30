@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\UserPlantInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use OpenApi\Attributes as OA;
+use App\Http\Requests\StoreUserPlantRequest;
+
 
 class UserPlantController extends Controller
 {
@@ -51,15 +52,10 @@ class UserPlantController extends Controller
             )
         ]
     )]
-    public function store(Request $request)
+    public function store(StoreUserPlantRequest $request)
     {
-        $request->validate([
-            'plant_id' => 'required|integer|exists:plants,id',
-        ]);
-
-        $user = Auth::user();
-        $data = $request->only(['plant_id']);
-        $data['user_id'] = $user->id;
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
 
         $userPlant = $this->userPlantService->createUserPlant($data);
 
